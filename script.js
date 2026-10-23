@@ -1,23 +1,37 @@
 // Helper function: replaces content inside #out
-function render (html) {
-  document.getElementById('out').innerHTML = html
+function render(html) {
+   document.getElementById('out').innerHTML = html
 }
 
 /* -------------------------------
    Demo 1: Click (counter)
 -------------------------------- */
 let clickCount = 0
-
+document.getElementById('btnClick').addEventListener('click', () => {
+   clickCount++
+   render(`<p>You clicked the button ${clickCount} time${clickCount === 1 ? '' : 's'}.</p>`)
+})
 
 /* --------------------------------------
    Demo 2: Double-click (toggle highlight)
 --------------------------------------- */
-
+const dblCard = document.getElementById('dblCard')
+dblCard.addEventListener('dblclick', () => {
+   dblCard.classList.toggle('activated')
+   const state = dblCard.classList.contains('activated') ? 'ON' : 'OFF'
+   render(`<p>The highlight is ${state}.</p>`)
+})
 
 /* --------------------------------
    Demo 3: Keypress (show key/code)
 --------------------------------- */
+const kbKey = document.getElementById('kbKey')
+const kbCode = document.getElementById('kbCode')
 
+document.addEventListener('keydown', e => {
+   kbKey.textContent = e.key === ' ' ? '(space)' : e.key
+   kbCode.textContent = e.code
+})
 
 /* ----------------------------------------
    Demo 4: Show Time (12-hour format + day)
@@ -28,11 +42,32 @@ let clickCount = 0
    Utility: Clear output
 -------------------------- */
 document.getElementById('btnClear').addEventListener('click', () => {
-  render('<span class="text-secondary">Output cleared.</span>')
+   render('<span class="text-secondary">Output cleared.</span>')
 })
 
+/* -------------------------
+   Option A — Hover Highlight + Counter
+-------------------------- */
+const hoverCard = document.getElementById('hoverCard')
+let hoverCount = 0
+
+hoverCard.addEventListener('mouseenter', () => {
+   hoverCard.classList.add('activated')
+   hoverCount++
+   render(`<p>You hovered over the card ${hoverCount} time${hoverCount === 1 ? '' : 's'}.</p>`)
+})
+
+hoverCard.addEventListener('mouseleave', () => {
+   hoverCard.classList.remove('activated')
+   render('<p> You\'re not hovering over the card.</p>')
+})
+
+/* -------------------------
+   Option B — Scroll Progress Bar
+-------------------------- */
+
 /* =================================================
-   🔥 Event Listeners Challenge (Pick ONE to complete)
+   🔥 Event Listeners Challenge (Pick TWO to complete)
 
    Option A — Hover Highlight + Counter
    - Create a variable to track how many times the card was hovered
